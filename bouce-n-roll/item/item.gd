@@ -1,4 +1,5 @@
 extends Area
+signal hit(by)
 
 
 export (float) var rotation_speed : float = 5
@@ -24,6 +25,6 @@ func _process(delta):
 	rotate(Vector3.UP, delta * rotation_speed)
 
 
-func _on_Item_body_entered(body):
-	print("Body entered")
+func _on_Item_body_entered(body) -> void:
+	emit_signal("hit", body.get_groups())
 	respawn()
