@@ -33,4 +33,7 @@ func process_target():
 	target = target.normalized()
 	
 func process_movement(delta):
+	target.x += 0.5 * (randf() * 2 - 1)
+	target.z += 0.5 * (randf() * 2 - 1)
+	target = target.normalized()
 	apply_impulse(Vector3(0, 0.2, 0), delta * target * speed * clamp(squared_distance_to_target / 100, 0, 1))

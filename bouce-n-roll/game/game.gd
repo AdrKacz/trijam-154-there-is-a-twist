@@ -12,6 +12,7 @@ func _ready():
 	game_ui.set_score(GameGlobal.player_score)
 	timer.start()
 	game_ui.set_time(current_time)
+	SoundManager.play_game_music()
 
 func _on_SecondTimer_timeout():
 	current_time -= 1

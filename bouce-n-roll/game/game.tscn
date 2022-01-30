@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://platform/platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
@@ -6,9 +6,21 @@
 [ext_resource path="res://item/item.tscn" type="PackedScene" id=4]
 [ext_resource path="res://intelligent-controller/intelligent-controller.tscn" type="PackedScene" id=5]
 [ext_resource path="res://game-ui/game-ui.tscn" type="PackedScene" id=6]
+[ext_resource path="res://graphics/Cartoon Base NightSky Equirect.png" type="Texture" id=7]
+
+[sub_resource type="PanoramaSky" id=3]
+panorama = ExtResource( 7 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 3 )
+background_energy = 5.0
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 2 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, 0.5, -0.5, 0, 10, 0 )
@@ -27,11 +39,43 @@ size = 12.0
 
 [node name="Item" parent="." instance=ExtResource( 4 )]
 
-[node name="IntelligentController" parent="." instance=ExtResource( 5 )]
-
 [node name="GameUI" parent="." instance=ExtResource( 6 )]
 
 [node name="SecondTimer" type="Timer" parent="."]
+
+[node name="NPCs" type="Node" parent="."]
+
+[node name="IntelligentController" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController2" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController3" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController4" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController5" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController6" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController7" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController8" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController9" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController10" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController11" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController12" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController13" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController14" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController15" parent="NPCs" instance=ExtResource( 5 )]
+
+[node name="IntelligentController16" parent="NPCs" instance=ExtResource( 5 )]
 
 [connection signal="hit" from="Item" to="." method="_on_Item_hit"]
 [connection signal="timeout" from="SecondTimer" to="." method="_on_SecondTimer_timeout"]
