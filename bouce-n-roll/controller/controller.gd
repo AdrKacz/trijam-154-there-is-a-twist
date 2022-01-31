@@ -1,12 +1,15 @@
-extends RigidBody
+extends Spatial
+signal fall
 
-export (float) var speed : float = 10
+export (float, 500, 5000) var force_factor : float = 1000
+export (float, 1, 10) var angle_factor : float = 1
+
+onready var rigid_body : RigidBody = $RigidBody
+onready var camera_root : Spatial = $CameraRoot
+onready var camera : Camera = $CameraRoot/Camera
 
 var direction : Vector3 = Vector3()
-var jump : bool = false
-
-func _ready():
-	respawn()
+var input_movement_vector : Vector2 = Vector2()
 
 func _physics_process(delta) -> void:
 	process_input()
@@ -14,23 +17,14 @@ func _physics_process(delta) -> void:
 	
 func _process(_delta) -> void:
 	if translation.y < -10:
-		respawn()
-		
-func respawn() -> void:
-	var theta : float = randf() * PI * 2
-	var r : float = randf() * 3
-	
-	translation = Vector3(
-		r * cos(theta),
-		2,
-		r * sin(theta)
-	)
-	
+		emit_signal("fall")
+
 func process_input() -> void:
 	# Forces
 	direction = Vector3()
+	input_movement_vector = Vector2()
 	
-	var input_movement_vector : Vector2 = Vector2()
+	var camera_xform : Transform = camera.global_transform
 	
 	if Input.is_action_pressed("ui_up"):
 		input_movement_vector.y += 1
@@ -42,20 +36,14 @@ func process_input() -> void:
 		input_movement_vector.x += 1
 	input_movement_vector = input_movement_vector.normalized()
 	
-	direction.x = input_movement_vector.x
-	direction.z = - input_movement_vector.y
+	direction += - camera_xform.basis.z * input_movement_vector.y
+	direction.y = 0
+	direction = direction.normalized()
 	
-	
-#	# Jump, TODO: Is on floor
-	if Input.is_action_just_pressed("ui_jump"):
-		jump = true
 	
 func process_movement(delta) -> void:
-	direction.y = 0
-	apply_impulse(Vector3(0, 0.2, 0), delta * direction * speed)
-	if jump:
-		jump = false
-		apply_impulse(Vector3(0, -0.2, 0), Vector3(0, 3, 0))
+	rigid_body.add_force(direction * force_factor * delta, Vector3())
+	camera_root.rotate_y(input_movement_vector.x * angle_factor * delta)
 	
 	
 #func _input(event) -> void:

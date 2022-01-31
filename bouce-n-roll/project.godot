@@ -14,17 +14,6 @@ config/name="bouce-n-roll"
 run/main_scene="res://menu-ui/menu-ui.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-SceneManager="*res://globals/scene-manager.gd"
-GameGlobal="*res://globals/game-global.gd"
-SoundManager="*res://globals/sound-manager.tscn"
-
-[display]
-
-window/size/width=630
-window/size/height=500
-
 [input]
 
 ui_left={
@@ -63,9 +52,9 @@ ui_jump={
 
 [layer_names]
 
-3d_physics/layer_1="world"
+3d_physics/layer_1="environment"
 3d_physics/layer_2="controller"
-3d_physics/layer_3="item"
+3d_physics/layer_3="pickable"
 
 [physics]
 

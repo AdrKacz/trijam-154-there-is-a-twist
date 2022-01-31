@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://controller/controller.gd" type="Script" id=1]
-[ext_resource path="res://shaders/toon-shader.tres" type="Material" id=2]
 
 [sub_resource type="PhysicsMaterial" id=3]
 bounce = 0.5
@@ -10,16 +9,26 @@ bounce = 0.5
 
 [sub_resource type="SphereMesh" id=2]
 
-[node name="Controller" type="RigidBody" groups=["player"]]
-collision_layer = 2
-collision_mask = 3
-physics_material_override = SubResource( 3 )
+[node name="Controller" type="Spatial" groups=["player"]]
 script = ExtResource( 1 )
-speed = 20.0
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+collision_layer = 2
+collision_mask = 7
+physics_material_override = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
 mesh = SubResource( 2 )
-material/0 = ExtResource( 2 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="CameraRoot" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="CameraRoot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 10 )
+projection = 1
+size = 20.0
