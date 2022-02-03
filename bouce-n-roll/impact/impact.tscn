@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://sounds/impactSoft_medium_004.ogg" type="AudioStream" id=1]
+[ext_resource path="res://sounds/impactSoft_medium_003.ogg" type="AudioStream" id=2]
+[ext_resource path="res://random-audio-stream/random-audio-stream-3d.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sounds/impactSoft_medium_002.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sounds/impactSoft_medium_000.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sounds/impactSoft_medium_001.ogg" type="AudioStream" id=6]
+[ext_resource path="res://impact/impact.gd" type="Script" id=7]
+
+[sub_resource type="SphereMesh" id=1]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="SphereMesh" id=3]
+material = SubResource( 2 )
+radius = 0.1
+height = 0.2
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.507212, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Impact" type="Spatial"]
+script = ExtResource( 7 )
+
+[node name="AudioStreamPlayer3D" parent="." instance=ExtResource( 3 )]
+audio_streams = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 1 ) ]
+play_once = true
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+emitting = false
+amount = 12
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3( 0, 1, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 5.0
+initial_velocity_random = 0.5
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 4 )
+color = Color( 0.811765, 0.85098, 0.345098, 1 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

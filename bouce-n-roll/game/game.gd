@@ -10,4 +10,9 @@ func _ready():
 	enemies.spawn_enemies(n_enemies)
 
 func _physics_process(_delta):
-	enemies.update_target_all(controller.translation + controller_rigid_body.translation)
+	enemies.update_target_all(controller_rigid_body.global_transform.origin)
+
+
+func _on_Controller_fall():
+	# TODO: Animation
+	controller.reset_rigid_body()

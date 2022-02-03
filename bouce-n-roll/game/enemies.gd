@@ -5,6 +5,8 @@ export (PackedScene) var enemy_scene : PackedScene
 export (float) var min_r = 0
 export (float) var max_r = 4
 
+onready var impacts : Spatial = get_node('../Impacts')
+
 func spawn_enemies(n : int):
 	for i in range(n):
 		spawn_enemy()
