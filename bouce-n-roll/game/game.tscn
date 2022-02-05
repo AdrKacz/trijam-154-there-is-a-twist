@@ -8,11 +8,11 @@
 [ext_resource path="res://game/impacts.gd" type="Script" id=6]
 [ext_resource path="res://impact/impact.tscn" type="PackedScene" id=7]
 
-[sub_resource type="ProceduralSky" id=1]
+[sub_resource type="ProceduralSky" id=3]
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 1 )
+background_sky = SubResource( 3 )
 
 [node name="Game" type="Spatial"]
 script = ExtResource( 4 )
@@ -32,7 +32,6 @@ shadow_enabled = true
 [node name="Enemies" type="Spatial" parent="."]
 script = ExtResource( 5 )
 enemy_scene = ExtResource( 2 )
-max_r = 8.0
 
 [node name="Impacts" type="Spatial" parent="."]
 script = ExtResource( 6 )
@@ -41,3 +40,4 @@ impact_scene = ExtResource( 7 )
 [connection signal="hit" from="Environment" to="Impacts" method="_on_Environment_hit"]
 [connection signal="fall" from="Controller" to="." method="_on_Controller_fall"]
 [connection signal="hit_enemy" from="Controller" to="Impacts" method="_on_Controller_hit_enemy"]
+[connection signal="enemy_fall" from="Enemies" to="." method="_on_Enemies_enemy_fall"]

@@ -5,6 +5,8 @@ signal hit_enemy(position, energy)
 export (float, 500, 5000) var force_factor : float = 1000
 export (float, 1, 10) var angle_factor : float = 1
 
+export (int, 1, 10) var life : int = 3
+
 onready var rigid_body : RigidBody = $RigidBody
 onready var camera_root : Spatial = $CameraRoot
 onready var camera : Camera = $CameraRoot/Camera
@@ -22,8 +24,7 @@ func _physics_process(delta) -> void:
 	else:
 		movement_particle.emitting = false
 		
-	if rigid_body.translation.y < -10:
-		print('FEZLFNZKL')
+	if rigid_body.translation.y < -2:
 		emit_signal("fall")
 		
 func reset_rigid_body() -> void:
